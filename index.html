@@ -51,6 +51,9 @@
       }
 
       function addRepo(repo) {
+        if (repo.language) {
+            repo.language = (repo.name.toLowerCase().indexOf('django') != -1) ? 'Python' : repo.language;
+        }
         var $item = $("<li>").addClass("repo grid-1 " + (repo.language || '').toLowerCase());
         var $link = $("<a>").attr("href", repoUrl(repo)).appendTo($item);
         $link.append($("<h2>").text(repo.name));
@@ -119,9 +122,9 @@
   <body>
     <div id="wrapper" class="grid clearfix">
       <div id="main" class="grid-1">
-        <div id="logo"><h1>Futurecolors Open Source</h1></div>
+        <a href="http://futurecolors.ru"><div id="logo"><h1>Futurecolors Open Source</h1></div></a>
         <h1>Наши наработки в opensource.</h1>
-        <p><a href="https://futurecolors.ru">https://futurecolors.ru</a></p>
+        <p><a href="http://futurecolors.ru">https://futurecolors.ru</a></p>
       </div>
 
       <div class="grid grid-3">
