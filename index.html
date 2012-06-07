@@ -29,25 +29,14 @@
             }
 
             function addRecentlyUpdatedRepo(repo) {
-                var $item = $("<li>");
-
-                var $name = $("<a>").attr("href", repo.html_url).text(repo.name);
-                $item.append($("<span>").addClass("name").append($name));
-
-                var $time = $("<a>").attr("href", repo.html_url + "/commits").text(strftime("%h %e, %Y", repo.pushed_at));
-                $item.append($("<span>").addClass("time").append($time));
-
-                $item.append('<span class="bullet">&sdot;</span>');
-
-                var $watchers = $("<a>").attr("href", repo.html_url + "/watchers").text(repo.watchers + " watchers");
-                $item.append($("<span>").addClass("watchers").append($watchers));
-
-                $item.append('<span class="bullet">&sdot;</span>');
-
-                var $forks = $("<a>").attr("href", repo.html_url + "/network").text(repo.forks + " forks");
-                $item.append($("<span>").addClass("forks").append($forks));
-
-                $item.appendTo("#recently-updated-repos");
+                var $repo = ich.recentlyUpdatedRepo({
+                    url: repoUrl(repo),
+                    name: repo.name,
+                    watchers: repo.watchers,
+                    forks: repo.forks,
+                    date: strftime("%B %e, %Y", repo.pushed_at)
+                });
+                $repo.appendTo('#recently-updated-repos');
             }
 
             function addRepo(repo) {
@@ -65,7 +54,6 @@
                     is_fork: repo.fork
                 });
                 $repo.appendTo('#repos');
-                console.log(repo);
             }
 
             $.getJSON("https://api.github.com/orgs/futurecolors/repos?callback=?", function (result) {
@@ -130,18 +118,41 @@
     <div class="header__texture">
         <div class="wrapper">
             <h1 class="header__title">
-                <a href="http://futurecolors.ru"><strong>Future Colors</strong></a> Open Source
+                <a href="http://futurecolors.ru"><strong>Future Colors</strong></a>
+                <span class="header__hearts">&hearts;</span>
+                Open Source
             </h1>
             <a class="header__logo" href="http://futurecolors.ru"></a>
         </div>
     </div>
 </header>
 <div class="wrapper">
-    <section class="section section_right">
-        <h1 class="section__title">
+    <section class="section section_right rur">
+        <h1 class="rur__header">
             Recently updated
         </h1>
-        <ol id="recently-updated-repos"></ol>
+        <ol class="rur__items" id="recently-updated-repos">
+            <script id="recentlyUpdatedRepo" type="text/html">
+                <li class="rur__item">
+                    <span class="rur__date">{{ date }}</span>
+                    <a class="rur__link" href="{{ url }}/commits/">{{ name }}</a>
+                    <span class="rur__stats">
+                        {{# watchers }}
+                            <a href="{{ url }}/watchers/" class="rur__stat" title="{{ watchers }} watchers">
+                                <span class="rur__icon rur__icon_watchers"></span>
+                                {{ watchers }}
+                            </a>
+                        {{/ watchers }}
+                        {{# forks }}
+                            <a href="{{ url }}/network/" class="rur__stat" title="{{ forks }} forks">
+                                <span class="rur__icon rur__icon_forks"></span>
+                                {{ forks }}
+                            </a>
+                        {{/ forks }}
+                    </span>
+                </li>
+            </script>
+        </ol>
     </section>
     <section class="section">
         <a class="section__title"
@@ -157,7 +168,7 @@
         <script id="repo" type="text/html">
             <li class="repo">
                 <span class="repo__icon {{# is_fork }}repo__icon_fork{{/ is_fork }} {{^ is_fork }}repo__icon_own{{/ is_fork }}"></span>
-                <span class="repo__name repo__name_language_{{ language }}" title="Language: {{ language }}">
+                <span class="repo__name repo__name_language_{{ language }}" title="{{ description }} Language: {{ language }}">
                     {{# is_fork }}Fork {{/ is_fork }}
                     <a class="repo__link" href="{{ url }}">{{ name }}</a>
                 </span>
@@ -167,16 +178,16 @@
                 <div class="repo__stats">
                     <span class="repo__language">{{ language }}</span>
                     {{# watchers }}
-                        <span class="repo__stat" title="{{ watchers }} watchers">
+                        <a href="{{ url }}/watchers/" class="repo__stat" title="{{ watchers }} watchers">
                             <span class="repo__icon repo__icon_watchers"></span>
                             {{ watchers }}
-                        </span>
+                        </a>
                     {{/ watchers }}
                     {{# forks }}
-                        <span class="repo__stat" title="{{ forks }} forks">
+                        <a href="{{ url }}/network/" class="repo__stat" title="{{ forks }} forks">
                             <span class="repo__icon repo__icon_forks"></span>
                             {{ forks }}
-                        </span>
+                        </a>
                     {{/ forks }}
                 </div>
             </li>

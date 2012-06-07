@@ -104,6 +104,11 @@ em, i {
     text-decoration: none;
     color: white;
 }
+.header__hearts {
+    color: red;
+    text-shadow: 0 0 3px black;
+    vertical-align: middle;
+}
 
 
 /**
@@ -202,6 +207,7 @@ em, i {
 .repo__stat {
     vertical-align: middle;
     margin-right: 1em;
+    text-decoration: none;
     font-size: 75%;
     font-weight: bolder;
     color: #555;
@@ -213,4 +219,61 @@ em, i {
     line-height: 1.4;
     font-size: 87%;
     color: #333;
+}
+
+
+/**
+ * @subsection  Recently updated repos
+ */
+
+.rur {
+    min-width: 350px;
+}
+.rur__header {
+    margin-bottom: 0.5em;
+    font-size: 125%;
+}
+.rur__items {}
+.rur__item {
+    margin-bottom: 0.5em;
+}
+.rur__date {
+    float: right;
+    line-height: 2.1;
+    font-size: 75%;
+}
+.rur__link {
+    margin-right: 1em;
+    vertical-align: middle;
+}
+.rur__icon {
+    display: inline-block;
+    font-family: 'Octicons Regular';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 125%;
+    line-height: 1;
+    text-decoration: none;
+    vertical-align: baseline;
+}
+.rur__icon_watchers:before {
+    content: "";
+}
+.rur__icon_forks:before {
+    content: "";
+}
+.rur__stats {
+    margin-right: 1em;
+    vertical-align: middle;
+}
+.rur__stat {
+    vertical-align: middle;
+    margin-right: 1em;
+    text-decoration: none;
+    font-size: 75%;
+    font-weight: bolder;
+    color: #555;
+}
+.rur__stat .rur__icon {
+    font-size: 100%;
 }
