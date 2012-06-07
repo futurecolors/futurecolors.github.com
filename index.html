@@ -169,8 +169,8 @@
             <li class="repo">
                 <span class="repo__icon {{# is_fork }}repo__icon_fork{{/ is_fork }} {{^ is_fork }}repo__icon_own{{/ is_fork }}"></span>
                 <span class="repo__name repo__name_language_{{ language }}" title="{{ description }} Language: {{ language }}">
-                    {{# is_fork }}Fork {{/ is_fork }}
                     <a class="repo__link" href="{{ url }}">{{ name }}</a>
+                    {{# is_fork }} fork {{/ is_fork }}
                 </span>
                 {{# description }}
                 <span class="repo__description">&mdash; {{ description }}</span>
